@@ -427,7 +427,7 @@ Respond with ONLY valid JSON:
             : '';
 
       const feedbackInstruction = sess.feedback_mode
-        ? `\nFEEDBACK MODE IS ON:\n- Before your conversational reply, give a brief correction or praise about the user's last message\n- Format: Start with '✓ [praise]' or '💡 [gentle correction]' on its own line, then a blank line, then your conversational reply\n- Keep corrections short, kind, and specific (1-2 sentences max)\n- If the message was perfect, just say '✓ Perfect!' or similar\n- Then continue the conversation naturally`
+        ? `\nFEEDBACK MODE IS ON:\n- Before your conversational reply, give a brief correction or praise about the user's last message\n- Format: Start with '✓ [praise]' or '💡 [gentle correction]' on its own line, then a blank line, then your conversational reply\n- Keep corrections short, kind, and specific (1-2 sentences max)\n- If the message was perfect, just say '✓ Perfect!' or similar\n- Then continue the conversation naturally. Important: Give the feedback in the main language of the user: ${request.body.main_language} but also use the target language: ${request.body.target_language} in your improvements, so that the user can immediately follow the feedback tips`
         : '';
 
       const systemMessage = `You are a friendly, encouraging ${targetName} language tutor having a conversation with a ${mainName} speaker.
