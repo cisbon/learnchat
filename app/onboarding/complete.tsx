@@ -60,7 +60,7 @@ export default function OnboardingComplete() {
 
       setTimeout(() => {
         console.log('[Onboarding] Complete — redirecting to tabs');
-        router.replace('/(tabs)/(home)');
+        router.replace('/(tabs)/chat');
       }, 1800);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Something went wrong';

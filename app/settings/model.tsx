@@ -35,8 +35,9 @@ export default function ModelScreen() {
     const fetchConfig = async () => {
       try {
         console.log('[Settings/Model] Fetching current model config');
-        const config = await apiRequest<AppConfig>('/api/config?key=active_model');
-        setModel(config.value ?? '');
+        const data = await apiRequest<{ config: AppConfig[] }>('/api/config');
+        const active = data.config.find((c) => c.key === 'active_model');
+        setModel(active?.value ?? '');
       } catch (e) {
         console.error('[Settings/Model] Fetch config error:', e);
         setModel('google/gemini-2.0-flash-001');

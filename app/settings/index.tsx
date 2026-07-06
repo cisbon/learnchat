@@ -56,8 +56,8 @@ export default function SettingsScreen() {
     setLoadingLangs(true);
     try {
       console.log('[Settings] Fetching languages for profile:', profile.id);
-      const data = await apiRequest<LearningLanguage[]>(`/api/profiles/${profile.id}/languages`);
-      setLanguages(data);
+      const data = await apiRequest<{ languages: LearningLanguage[] }>(`/api/profiles/${profile.id}/languages`);
+      setLanguages(data.languages);
     } catch (e) {
       console.error('[Settings] Fetch languages error:', e);
     } finally {

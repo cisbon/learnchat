@@ -18,6 +18,10 @@ import { AnimatedPressable } from '@/components/AnimatedPressable';
 
 type Direction = 'target-to-native' | 'native-to-target';
 
+function isKnown(card: VocabularyCard, direction: Direction): boolean {
+  return direction === 'target-to-native' ? card.known_forward : card.known_backward;
+}
+
 function FlashCard({
   card,
   direction,
@@ -53,7 +57,7 @@ function FlashCard({
   const backOpacity = flipAnim.interpolate({ inputRange: [0, 0.5, 0.5, 1], outputRange: [0, 0, 1, 1] });
 
   const frontWord = direction === 'target-to-native' ? card.word : card.translation;
-  const frontPronunciation = direction === 'target-to-native' ? card.pronunciation : undefined;
+  const frontPronunciation = direction === 'target-to-native' ? card.pronunciation_hint : undefined;
   const backWord = direction === 'target-to-native' ? card.translation : card.word;
   const backExample = card.example_sentence;
 
@@ -112,14 +116,14 @@ export default function VocabularyScreen() {
     setError('');
     try {
       console.log('[Vocabulary] Fetching cards for', profile.id, activeLanguage.target_language);
-      const data = await apiRequest<VocabularyCard[]>(
+      const data = await apiRequest<{ cards: VocabularyCard[] }>(
         `/api/vocabulary/cards?profile_id=${profile.id}&target_language=${activeLanguage.target_language}&cefr_level=${activeLanguage.cefr_level}`
       );
       // Unknown cards first
-      const sorted = [...data.filter((c) => !c.known), ...data.filter((c) => c.known)];
+      const sorted = [...data.cards.filter((c) => !isKnown(c, direction)), ...data.cards.filter((c) => isKnown(c, direction))];
       setCards(sorted);
       setCurrentIndex(0);
-      setKnownCount(data.filter((c) => c.known).length);
+      setKnownCount(data.cards.filter((c) => isKnown(c, direction)).length);
       setCompleted(false);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : 'Failed to load cards';
@@ -128,7 +132,7 @@ export default function VocabularyScreen() {
     } finally {
       setLoading(false);
     }
-  }, [profile, activeLanguage]);
+  }, [profile, activeLanguage, direction]);
 
   useEffect(() => {
     fetchCards();
@@ -139,7 +143,7 @@ export default function VocabularyScreen() {
     console.log('[Vocabulary] Generate cards button pressed');
     setGenerating(true);
     try {
-      const newCards = await apiRequest<VocabularyCard[]>('/api/vocabulary/cards', {
+      const data = await apiRequest<{ cards: VocabularyCard[] }>('/api/vocabulary/cards', {
         method: 'POST',
         body: JSON.stringify({
           profile_id: profile.id,
@@ -147,7 +151,7 @@ export default function VocabularyScreen() {
           cefr_level: activeLanguage.cefr_level,
         }),
       });
-      const sorted = [...newCards.filter((c) => !c.known), ...newCards.filter((c) => c.known)];
+      const sorted = [...data.cards.filter((c) => !isKnown(c, direction)), ...data.cards.filter((c) => isKnown(c, direction))];
       setCards(sorted);
       setCurrentIndex(0);
       setCompleted(false);
@@ -167,7 +171,9 @@ export default function VocabularyScreen() {
     try {
       await apiRequest(`/api/vocabulary/cards/${card.id}/progress`, {
         method: 'PUT',
-        body: JSON.stringify({ known }),
+        body: JSON.stringify(
+          direction === 'target-to-native' ? { known_forward: known } : { known_backward: known }
+        ),
       });
     } catch (e) {
       console.error('[Vocabulary] Progress update error:', e);

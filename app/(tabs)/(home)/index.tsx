@@ -192,10 +192,10 @@ export default function GrammarScreen() {
     setError('');
     try {
       console.log('[Grammar] Fetching lessons for', profile.id, activeLanguage.target_language);
-      const data = await apiRequest<GrammarLesson[]>(
+      const data = await apiRequest<{ lessons: GrammarLesson[] }>(
         `/api/grammar/lessons?profile_id=${profile.id}&target_language=${activeLanguage.target_language}&cefr_level=${activeLanguage.cefr_level}`
       );
-      setLessons(data);
+      setLessons(data.lessons);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : 'Failed to load lessons';
       console.error('[Grammar] Fetch error:', msg);

@@ -103,8 +103,8 @@ export default function ChatListScreen() {
     setError('');
     try {
       console.log('[Chat] Fetching sessions for profile:', profile.id);
-      const data = await apiRequest<ChatSession[]>(`/api/chat/sessions?profile_id=${profile.id}`);
-      setSessions(data);
+      const data = await apiRequest<{ sessions: ChatSession[] }>(`/api/chat/sessions?profile_id=${profile.id}`);
+      setSessions(data.sessions);
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : 'Failed to load sessions';
       console.error('[Chat] Fetch error:', msg);

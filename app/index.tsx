@@ -12,7 +12,7 @@ export default function Index() {
       console.log('[Index] Profile ID from storage:', id);
       if (id) {
         console.log('[Index] Has profile — navigating to tabs');
-        router.replace('/(tabs)/(home)');
+        router.replace('/(tabs)/chat');
       } else {
         console.log('[Index] No profile — navigating to onboarding');
         router.replace('/onboarding');

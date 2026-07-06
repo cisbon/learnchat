@@ -240,19 +240,24 @@ export default function ChatScreen() {
     scrollToEnd();
 
     try {
-      const response = await apiRequest<{ messages: ChatMessage[] }>(
-        `/api/chat/sessions/${sessionId}/messages`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            content: content.trim(),
-            main_language: profile.main_language,
-            action: action ?? null,
-          }),
-        }
-      );
+      const response = await apiRequest<{
+        user_message: ChatMessage;
+        ai_message: ChatMessage;
+        correction_message: ChatMessage | null;
+      }>(`/api/chat/sessions/${sessionId}/messages`, {
+        method: 'POST',
+        body: JSON.stringify({
+          content: content.trim(),
+          main_language: profile.main_language,
+          action: action ?? null,
+        }),
+      });
       setIsTyping(false);
-      const newMsgs = response.messages ?? [];
+      const newMsgs = [
+        response.user_message,
+        ...(response.correction_message ? [response.correction_message] : []),
+        response.ai_message,
+      ];
       setMessages((prev) => {
         const filtered = prev.filter((m) => m.id !== userMsg.id);
         return [...filtered, ...newMsgs];

@@ -25,12 +25,16 @@ const TABS = [
   },
 ];
 
+export const unstable_settings = {
+  initialRouteName: 'chat',
+};
+
 export default function TabLayoutIOS() {
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.background }}>
       <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
-        <Stack.Screen name="(home)" />
         <Stack.Screen name="chat" />
+        <Stack.Screen name="(home)" />
         <Stack.Screen name="vocabulary" />
       </Stack>
       <FloatingTabBar tabs={TABS} containerWidth={300} />

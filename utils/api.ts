@@ -80,9 +80,10 @@ export interface VocabularyCard {
   cefr_level: string;
   word: string;
   translation: string;
-  pronunciation?: string;
+  pronunciation_hint?: string | null;
   example_sentence?: string;
-  known: boolean;
+  known_forward: boolean;
+  known_backward: boolean;
   created_at?: string;
 }
 
