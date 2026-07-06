@@ -249,7 +249,7 @@ export default function ChatScreen() {
         body: JSON.stringify({
           content: content.trim(),
           main_language: profile.main_language,
-          action: action ?? null,
+          action: action ?? 'none',
         }),
       });
       setIsTyping(false);
@@ -274,8 +274,8 @@ export default function ChatScreen() {
 
   const handleQuickAction = (action: QuickAction) => {
     console.log('[Chat] Quick action pressed:', action);
-    if (!inputText.trim()) return;
-    sendMessage(inputText, action.toLowerCase());
+    const content = inputText.trim() || action;
+    sendMessage(content, action.toLowerCase());
   };
 
   const handleFeedbackToggle = async () => {
