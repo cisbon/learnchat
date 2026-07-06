@@ -16,7 +16,7 @@ import { Check } from 'lucide-react-native';
 function ProgressDots({ total, active }: { total: number; active: number }) {
   return (
     <View style={styles.dotsRow}>
-      {Array.from({ length: total }).map((_, i) => (
+      {Array.from({ length: total }, (_, i) => i).map((i) => (
         <View
           key={i}
           style={[
