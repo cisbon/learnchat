@@ -1,0 +1,31 @@
+export const LANGUAGE_NAMES: Record<string, string> = {
+  en: 'English',
+  de: 'German',
+  fr: 'French',
+  es: 'Spanish',
+  it: 'Italian',
+  pt: 'Portuguese',
+  nl: 'Dutch',
+  ru: 'Russian',
+  zh: 'Chinese (Mandarin)',
+  ja: 'Japanese',
+  ko: 'Korean',
+  ar: 'Arabic',
+  hi: 'Hindi',
+  tr: 'Turkish',
+  pl: 'Polish',
+  sv: 'Swedish',
+  da: 'Danish',
+  fi: 'Finnish',
+  no: 'Norwegian',
+  uk: 'Ukrainian',
+};
+
+export const CEFR_DESCRIPTIONS: Record<string, string> = {
+  A1: 'absolute beginner (first basics, simple words and phrases)',
+  A2: 'elementary (in-depth basics, simple sentences)',
+  B1: 'intermediate (good conversational ability)',
+  B2: 'upper-intermediate (fluent, can discuss most topics)',
+  C1: 'advanced (fluent/business fluent, nuanced expression)',
+  C2: 'proficient (native-like mastery)',
+};
