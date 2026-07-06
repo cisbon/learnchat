@@ -22,10 +22,10 @@ export const LANGUAGE_NAMES: Record<string, string> = {
 };
 
 export const CEFR_DESCRIPTIONS: Record<string, string> = {
-  A1: 'absolute beginner (first basics, simple words and phrases)',
-  A2: 'elementary (in-depth basics, simple sentences)',
-  B1: 'intermediate (good conversational ability)',
-  B2: 'upper-intermediate (fluent, can discuss most topics)',
-  C1: 'advanced (fluent/business fluent, nuanced expression)',
-  C2: 'proficient (native-like mastery)',
+  A1: 'A1 level: absolute beginner (first basics, simple words and phrases)',
+  A2: 'A2 level: elementary (in-depth basics, simple sentences)',
+  B1: 'B1 level: intermediate (good conversational ability)',
+  B2: 'B2 level: upper-intermediate (fluent, can discuss most topics)',
+  C1: 'C1 level: advanced (fluent/business fluent, nuanced expression)',
+  C2: 'C2 level: proficient (native-like mastery)',
 };
