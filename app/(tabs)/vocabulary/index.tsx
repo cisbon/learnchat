@@ -149,6 +149,7 @@ export default function VocabularyScreen() {
           profile_id: profile.id,
           target_language: activeLanguage.target_language,
           cefr_level: activeLanguage.cefr_level,
+          main_language: profile.main_language,
         }),
       });
       const sorted = [...data.cards.filter((c) => !isKnown(c, direction)), ...data.cards.filter((c) => isKnown(c, direction))];
