@@ -129,6 +129,7 @@ export default function ChatListScreen() {
           profile_id: profile.id,
           target_language: activeLanguage.target_language,
           cefr_level: activeLanguage.cefr_level,
+          main_language: profile.main_language,
         }),
       });
       console.log('[Chat] Session created:', session.id);
