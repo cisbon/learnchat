@@ -1,44 +1,57 @@
 import React from 'react';
-import { View } from 'react-native';
-import { usePathname } from 'expo-router';
-import { Stack } from 'expo-router';
-import FloatingTabBar from '@/components/FloatingTabBar';
+import { Tabs } from 'expo-router';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { COLORS } from '@/constants/theme';
 
-const TABS = [
-  {
-    name: '(home)',
-    route: '/(tabs)/(home)' as const,
-    icon: 'menu-book' as const,
-    label: 'Grammar',
-  },
-  {
-    name: 'chat',
-    route: '/(tabs)/chat' as const,
-    icon: 'chat-bubble-outline' as const,
-    label: 'Chat',
-  },
-  {
-    name: 'vocabulary',
-    route: '/(tabs)/vocabulary' as const,
-    icon: 'layers' as const,
-    label: 'Vocab',
-  },
-];
-
 export const unstable_settings = {
-  initialRouteName: 'chat',
+  initialRouteName: '(home)',
 };
 
 export default function TabLayout() {
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
-      <Stack screenOptions={{ headerShown: false, animation: 'none' }}>
-        <Stack.Screen name="chat" />
-        <Stack.Screen name="(home)" />
-        <Stack.Screen name="vocabulary" />
-      </Stack>
-      <FloatingTabBar tabs={TABS} containerWidth={300} />
-    </View>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: '#8E8E93',
+        tabBarStyle: {
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#E5E5EA',
+          borderTopWidth: 1,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '500',
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="(home)"
+        options={{
+          title: 'Grammar',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="menu-book" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: 'Chat',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="chat-bubble-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="vocabulary"
+        options={{
+          title: 'Vocab',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="layers" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
